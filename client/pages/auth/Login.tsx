@@ -1,89 +1,62 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import Navigation from "@/components/Navigation";
-import { Mail, Lock } from "lucide-react";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function Login() {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate()
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // TODO: Add login logic here
+    console.log("Login attempt:", { email, password })
+  }
+
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <div className="flex items-center justify-center min-h-[calc(100vh-64px)] px-4 py-8">
-        <div className="w-full max-w-md">
-          <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
-            <div className="mb-8 text-center">
-              <h1 className="text-2xl font-bold text-foreground">Welcome Back</h1>
-              <p className="text-muted-foreground mt-2">Sign in to your account to continue</p>
-            </div>
-
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Email
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
-                  <Input
-                    type="email"
-                    placeholder="your@example.com"
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="block text-sm font-medium text-foreground">
-                    Password
-                  </label>
-                  <a href="#" className="text-sm text-primary hover:underline">
-                    Forgot?
-                  </a>
-                </div>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
-                  <Input
-                    type="password"
-                    placeholder="••••••••"
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id="remember"
-                  className="rounded border-border"
-                />
-                <label htmlFor="remember" className="text-sm text-muted-foreground">
-                  Remember me
-                </label>
-              </div>
-
-              <Button className="w-full">Sign In</Button>
-            </form>
-
-            <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground">
-                Don't have an account?{" "}
-                <Link to="/auth/candidate-signup" className="text-primary hover:underline font-medium">
-                  Create one
-                </Link>
-              </p>
-            </div>
-
-            <div className="mt-6 pt-6 border-t border-border space-y-2">
-              <Link to="/auth/admin-login" className="block">
-                <Button variant="ghost" className="w-full text-muted-foreground">
-                  Admin? Log in here
-                </Button>
-              </Link>
-            </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 className="text-3xl font-bold text-center mb-8 text-gray-900">
+          Login
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              required
+            />
           </div>
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+          >
+            Login
+          </button>
+        </form>
+        <p className="text-center text-sm text-gray-600 mt-4">
+          Don't have an account?{" "}
+          <a href="/auth/candidate-signup" className="text-blue-600 hover:underline">
+            Sign up
+          </a>
+        </p>
       </div>
     </div>
-  );
+  )
 }
